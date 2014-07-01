@@ -31,6 +31,7 @@
 		C1330EA41962636700091486 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330EA31962636700091486 /* Security.framework */; };
 		C1330EA61962636E00091486 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330EA51962636E00091486 /* StoreKit.framework */; };
 		C1330EA81962637800091486 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330EA71962637800091486 /* SystemConfiguration.framework */; };
+		D9AC6D6E196281DE00C461D5 /* DataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D9AC6D6D196281DE00C461D5 /* DataProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		C1330EA31962636700091486 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C1330EA51962636E00091486 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C1330EA71962637800091486 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D9AC6D6C196281DE00C461D5 /* DataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataProvider.h; sourceTree = "<group>"; };
+		D9AC6D6D196281DE00C461D5 /* DataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +162,8 @@
 				C1330E761962624300091486 /* ViewController.m */,
 				C1330E781962624300091486 /* Images.xcassets */,
 				C1330E671962624300091486 /* Supporting Files */,
+				D9AC6D6C196281DE00C461D5 /* DataProvider.h */,
+				D9AC6D6D196281DE00C461D5 /* DataProvider.m */,
 			);
 			path = "nstoregram Demo";
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 			files = (
 				C1330E771962624300091486 /* ViewController.m in Sources */,
 				C1330E711962624300091486 /* AppDelegate.m in Sources */,
+				D9AC6D6E196281DE00C461D5 /* DataProvider.m in Sources */,
 				C1330E6D1962624300091486 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,6 +510,7 @@
 				C1330E911962624300091486 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C1330E921962624300091486 /* Build configuration list for PBXNativeTarget "nstoregram DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +519,7 @@
 				C1330E941962624300091486 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
