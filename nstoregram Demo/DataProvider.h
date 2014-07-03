@@ -19,4 +19,7 @@ typedef void (^NSArrayBlock)(NSArray *obj, NSError *error);
 
 -(void)queryAllProductsFromStore:(NSString *)store
                       completion:(NSArrayBlock)block;
+
+-(void)queryStoreByCategory:(NSString *)name
+               completion:(NSArrayBlock)block;
 @end

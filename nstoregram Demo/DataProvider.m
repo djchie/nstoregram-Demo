@@ -32,12 +32,20 @@
     //[query whereKey:@"name" containsString:name];
     [query findObjectsInBackgroundWithBlock:block];
 }
+
 -(void)queryAllProductsFromStore:(NSString *)store completion:(NSArrayBlock)block
 {
     // NOTE:: this will be slow for large dataset, see parse documentation
     // the matchesRegex query allows us to query with caseinsensitivity:
     PFQuery *query = [PFQuery queryWithClassName:@"Product"];
     [query whereKey:@"store_name" matchesRegex:store modifiers:@"i"];
+    [query findObjectsInBackgroundWithBlock:block];
+}
+
+-(void)queryStoreByCategory:(NSString *)category completion:(NSArrayBlock)block
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+    [query whereKey:@"category" matchesRegex:category modifiers:@"i"];
     [query findObjectsInBackgroundWithBlock:block];
 }
 
