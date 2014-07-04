@@ -8,6 +8,10 @@
 
 #import "SearchResultViewController.h"
 
+#import "ProductResultTableViewCell.h"
+
+#import "SVProgressHUD.h"
+
 @interface SearchResultViewController ()
 
 @end
@@ -26,16 +30,17 @@
     // Do any additional setup after loading the view.
 
     [self searchProductsByName:searchString];
-
+    self.searchBar.text = searchString;
+    originalViewFrame = self.view.frame;
+    originalNavigationFrame = self.navigationController.navigationBar.frame;
+    
     resultTableView.delegate = self;
     resultTableView.dataSource = self;
-
-//    [resultTableView reloadData];
+    self.searchBar.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [resultTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,16 +53,21 @@
 
 - (void)searchProductsByName:(NSString *)name
 {
+
+    [SVProgressHUD  show];
     NSArrayBlock block = ^(NSArray *obj, NSError *error)
     {
+        [SVProgressHUD dismiss];
         if (!error)
         {
             searchResultArray = obj;
+            NSLog(@"SearchResultViewController::searchProductByName searchResultArray %@", searchResultArray);
+            [resultTableView reloadData];
         }
     };
-
-
+    NSLog(@"query name %@", name);
     [[DataProvider sharedInstance] queryProductByName:name completion:block];
+  //  [[DataProvider sharedInstance] queryProductByNameContainsString:name completion:block];
 }
 
 #pragma mark - Action Methods
@@ -90,19 +100,47 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
+    ProductResultTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ProductResultTableViewCell class])];
+    if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[ProductResultTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                 reuseIdentifier:NSStringFromClass([ProductResultTableViewCell class])];
     }
-
     PFObject* product = searchResultArray[indexPath.row];
+    
+    cell.productName.text = product[@"name"];
+    cell.store.text = product[@"store_name"];
+    cell.price.text = [NSString stringWithFormat:@"%@", product[@"price"]];
+    cell.quantity.text = [NSString stringWithFormat:@"%@", product[@"stock"]];
+    cell.shortDescription.text = product[@"short_description"];
+    
+    // havent really tested this one yet
+    // now lets try to fetch the image in the background
+    PFFile *imageFile = product[@"image"];
+    // always send a weakself a callblock due to retain cycles
+    __weak typeof (self) weakSelf = self;
+    if (imageFile)
+    {
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+            if (!error)
+            {
+                cell.productImageView.image = [UIImage imageWithData:data];
+                // this might not be a good way to approach this
+                // we should consider handling a Key Value observer
+                // to observ whether or not an image is ever set to productImage then
+                // we can update this cell according
+                [weakSelf.resultTableView reloadData];
 
-    cell.textLabel.text = product[@"store_name"];
-    NSString* countString = [NSString stringWithFormat:@"Price: %@, Stock: %@", product[@"price"], product[@"stock"]];
-    cell.detailTextLabel.text = countString;
+                
+            }
+        } progressBlock:^(int percentDone) {
+            // we can do some loading screen here if we want
+            
+        }];
+    }
+    //cell.textLabel.text = product[@"store_name"];
+   // NSString* countString = [NSString stringWithFormat:@"Price: %@, Stock: %@", product[@"price"], product[@"stock"]];
+   // cell.detailTextLabel.text = countString;
 
     return cell;
 }
@@ -110,6 +148,68 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
+}
+
+#pragma mark - SearchBar Delegate
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    // animating search bar UP
+    CGRect oldNav = self.navigationController.navigationBar.frame;
+    CGRect newRect = CGRectMake(oldNav.origin.x, oldNav.origin.y - 64, 320, 44);
+    [UIView animateWithDuration:.30
+                     animations:^
+     {
+         self.navigationController.navigationBar.frame = newRect;
+         self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - 44, self.view.frame.size.width, self.view.frame.size.height);
+         
+         
+     } completion:^(BOOL finished)
+     {
+     }];
+    [searchBar setShowsCancelButton:YES
+                           animated:YES];
+    return YES;
+}
+
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [self.searchBar setShowsCancelButton:NO
+                                animated:YES];
+    
+    [searchBar resignFirstResponder];
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    // animating search bar down
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO
+                           animated:YES];
+    [UIView animateWithDuration:.30
+                     animations:^
+     {
+         self.navigationController.navigationBar.frame = originalNavigationFrame;
+         self.view.frame = originalViewFrame;
+         //  self.searchBar.frame = searchBarPosition;
+         
+     }];
+    // do search here
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    // animating search bar down
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO
+                           animated:YES];
+    [UIView animateWithDuration:.30
+                     animations:^
+     {
+         self.navigationController.navigationBar.frame = originalNavigationFrame;
+         self.view.frame = originalViewFrame;
+         //  self.searchBar.frame = searchBarPosition;
+         
+     }];
 }
 
 #pragma mark - MapView Methods

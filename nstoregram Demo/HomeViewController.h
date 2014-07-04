@@ -11,10 +11,11 @@
 #import <Parse/Parse.h>
 #import "SearchResultViewController.h"
 
-@interface HomeViewController : UIViewController <UITextFieldDelegate>
+
+@interface HomeViewController : UIViewController <UISearchBarDelegate>
 
 @property (weak, nonatomic) NSString* cachedSearchString;
 
-@property (weak, nonatomic) IBOutlet UITextField* searchTextField;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

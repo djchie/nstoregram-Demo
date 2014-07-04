@@ -11,14 +11,23 @@
 #import "DataProvider.h"
 #import <Parse/Parse.h>
 
-@interface SearchResultViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate>
+@interface SearchResultViewController : UIViewController <UITableViewDataSource,
+                                                          UITableViewDelegate,
+                                                          MKMapViewDelegate,
+                                                          UISearchBarDelegate>
+{
+    CGRect originalViewFrame;
+    CGRect originalNavigationFrame;
+}
 
-@property (weak, nonatomic) NSString* searchString;
+@property (strong, nonatomic) NSString* searchString;
 @property (strong, nonatomic) NSArray* searchResultArray;
 
 @property (weak, nonatomic) IBOutlet UITableView* resultTableView;
 @property (weak, nonatomic) IBOutlet MKMapView* resultMapView;
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl* viewSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 - (IBAction)viewSegmentedControlPressed:(id)sender;
 

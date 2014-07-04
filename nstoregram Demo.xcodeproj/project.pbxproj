@@ -33,6 +33,11 @@
 		C1330EA41962636700091486 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330EA31962636700091486 /* Security.framework */; };
 		C1330EA61962636E00091486 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330EA51962636E00091486 /* StoreKit.framework */; };
 		C1330EA81962637800091486 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330EA71962637800091486 /* SystemConfiguration.framework */; };
+		D94B3B211966573700EC7589 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D94B3B1E1966573700EC7589 /* SVProgressHUD.bundle */; };
+		D94B3B221966573700EC7589 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D94B3B201966573700EC7589 /* SVProgressHUD.m */; };
+		D94B3B2619666CE700EC7589 /* ProductResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D94B3B2519666CE700EC7589 /* ProductResultTableViewCell.m */; };
+		D94B3B2E1966761700EC7589 /* image_not_available.png in Resources */ = {isa = PBXBuildFile; fileRef = D94B3B2C1966761700EC7589 /* image_not_available.png */; };
+		D94B3B311966763600EC7589 /* image_not_available@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D94B3B301966763600EC7589 /* image_not_available@2x.png */; };
 		D9AC6D6E196281DE00C461D5 /* DataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D9AC6D6D196281DE00C461D5 /* DataProvider.m */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +84,14 @@
 		C1330EA31962636700091486 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C1330EA51962636E00091486 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C1330EA71962637800091486 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D94B3B1D1966573700EC7589 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		D94B3B1E1966573700EC7589 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		D94B3B1F1966573700EC7589 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		D94B3B201966573700EC7589 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		D94B3B2419666CE700EC7589 /* ProductResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductResultTableViewCell.h; sourceTree = "<group>"; };
+		D94B3B2519666CE700EC7589 /* ProductResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductResultTableViewCell.m; sourceTree = "<group>"; };
+		D94B3B2C1966761700EC7589 /* image_not_available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_not_available.png; sourceTree = "<group>"; };
+		D94B3B301966763600EC7589 /* image_not_available@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image_not_available@2x.png"; sourceTree = "<group>"; };
 		D9AC6D6C196281DE00C461D5 /* DataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataProvider.h; sourceTree = "<group>"; };
 		D9AC6D6D196281DE00C461D5 /* DataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +175,9 @@
 		C1330E661962624300091486 /* nstoregram Demo */ = {
 			isa = PBXGroup;
 			children = (
+				D94B3B2A1966745000EC7589 /* Extensions */,
+				D94B3B2319666CD200EC7589 /* TableViewCells */,
+				D94B3B1B1966573700EC7589 /* Library */,
 				C1330E6F1962624300091486 /* AppDelegate.h */,
 				C1330E701962624300091486 /* AppDelegate.m */,
 				C1330E721962624300091486 /* Main.storyboard */,
@@ -180,6 +196,7 @@
 		C1330E671962624300091486 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D94B3B2B1966761700EC7589 /* Assets */,
 				C1330E681962624300091486 /* nstoregram Demo-Info.plist */,
 				C1330E691962624300091486 /* InfoPlist.strings */,
 				C1330E6C1962624300091486 /* main.m */,
@@ -205,6 +222,50 @@
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
+		};
+		D94B3B1B1966573700EC7589 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				D94B3B1C1966573700EC7589 /* SVProgressHUD */,
+			);
+			path = Library;
+			sourceTree = SOURCE_ROOT;
+		};
+		D94B3B1C1966573700EC7589 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				D94B3B1D1966573700EC7589 /* SVProgressHUD-Prefix.pch */,
+				D94B3B1E1966573700EC7589 /* SVProgressHUD.bundle */,
+				D94B3B1F1966573700EC7589 /* SVProgressHUD.h */,
+				D94B3B201966573700EC7589 /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		D94B3B2319666CD200EC7589 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				D94B3B2419666CE700EC7589 /* ProductResultTableViewCell.h */,
+				D94B3B2519666CE700EC7589 /* ProductResultTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		D94B3B2A1966745000EC7589 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		D94B3B2B1966761700EC7589 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				D94B3B301966763600EC7589 /* image_not_available@2x.png */,
+				D94B3B2C1966761700EC7589 /* image_not_available.png */,
+			);
+			path = Assets;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -285,6 +346,9 @@
 				C1330E791962624300091486 /* Images.xcassets in Resources */,
 				C1330E6B1962624300091486 /* InfoPlist.strings in Resources */,
 				C1330E741962624300091486 /* Main.storyboard in Resources */,
+				D94B3B2E1966761700EC7589 /* image_not_available.png in Resources */,
+				D94B3B311966763600EC7589 /* image_not_available@2x.png in Resources */,
+				D94B3B211966573700EC7589 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,11 +367,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D94B3B2619666CE700EC7589 /* ProductResultTableViewCell.m in Sources */,
 				C1330E771962624300091486 /* HomeViewController.m in Sources */,
 				C1330E711962624300091486 /* AppDelegate.m in Sources */,
 				C102F67A1966024E00BBE425 /* SearchResultViewController.m in Sources */,
 				D9AC6D6E196281DE00C461D5 /* DataProvider.m in Sources */,
 				C1330E6D1962624300091486 /* main.m in Sources */,
+				D94B3B221966573700EC7589 /* SVProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

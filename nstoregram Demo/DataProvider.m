@@ -22,6 +22,7 @@
 	return sharedManagerInstance;
 }
 
+// these methods may be buggy
 - (void)queryProductByName:(NSString *)name
                completion:(NSArrayBlock)block
 {
@@ -39,6 +40,23 @@
     // the matchesRegex query allows us to query with caseinsensitivity:
     PFQuery *query = [PFQuery queryWithClassName:@"Product"];
     [query whereKey:@"store_name" matchesRegex:store modifiers:@"i"];
+    [query findObjectsInBackgroundWithBlock:block];
+}
+
+// USE THESE METHODS FOR CONTAINS IN QUERY
+-(void)queryProductByNameContainsString:(NSString *)name completion:(NSArrayBlock)block
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Product"];
+    [query whereKey:@"name"containsString:name];
+    //[query whereKey:@"name" containsString:name];
+    [query findObjectsInBackgroundWithBlock:block];
+}
+
+
+-(void)queryAllProductsFromStoreContainsString:(NSString *)store completion:(NSArrayBlock)block
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Product"];
+    [query whereKey:@"store_name" containsString:store];
     [query findObjectsInBackgroundWithBlock:block];
 }
 

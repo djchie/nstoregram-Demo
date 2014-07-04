@@ -8,22 +8,30 @@
 
 #import "HomeViewController.h"
 
+#import "SVProgressHUD.h"
+
 @interface HomeViewController ()
 
 @end
 
 @implementation HomeViewController
 
-@synthesize cachedSearchString;
-@synthesize searchTextField;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    searchTextField.delegate = self;
-
-//    NSArrayBlock block = ^(NSArray *obj, NSError *error)
+    // setting searchbar delegate
+    self.searchBar.delegate = self;
+    // adding single tap gesture so we can cancel keyboard if
+    // they tap on the screen
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(singleTapHandler:)];
+    
+    [self.view addGestureRecognizer:singleFingerTap];
+    
+    //TODO:: need to delete this residual code
+    //    NSArrayBlock block = ^(NSArray *obj, NSError *error)
 //    {
 //        if (!error)
 //        {
@@ -53,6 +61,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+// adding a conditional compilation flag, so we won't use this method
+// during demo unless we turn on the flag to 1
+#define POPULATE_PARSE_FLAG 0
+
+#if POPULATE_PARSE_FLAG
 #pragma mark - Parse Methods
 
 - (void)addProduct:(NSString *)productName
@@ -283,23 +296,54 @@
         [object saveInBackground];
     }
 }
+#endif
 
-#pragma mark - TextField Methods
+#pragma mark - UISearchBar Delegate Methods
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    cachedSearchString = textField.text;
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:false
+                           animated:true];
+}
 
-    [textField resignFirstResponder];
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    if (searchBar.text.length > 0)
+    {
+        SearchResultViewController *searchResultVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchResultViewController"];
+        searchResultVC.searchString = searchBar.text;
+        [self.navigationController pushViewController:searchResultVC
+                                             animated:true];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"Please enter a search value"];
+    }
+}
 
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:true
+                           animated:true];
     return YES;
+}
+
+#pragma mark - Action Methods
+
+- (IBAction)searchHandler:(id)sender
+{
+    // preessing the search button on screen is the same as pressing the search
+    // from the searchbar
+    [self searchBarSearchButtonClicked:self.searchBar];
 }
 
 #pragma mark - Segue Methods
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    if ([searchTextField.text isEqualToString:@""])
+    if ([self.searchBar.text isEqualToString:@""])
     {
         return NO;
     }
@@ -309,9 +353,30 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    SearchResultViewController* searchResultVC = segue.destinationViewController;
-    searchResultVC.searchString = searchTextField.text;
-    searchResultVC.navigationItem.title = [NSString stringWithFormat:@"Search Result: %@", searchTextField.text];
+//    SearchResultViewController* searchResultVC = segue.destinationViewController;
+//    searchResultVC.searchString = self.searchBar.text;
+//    searchResultVC.navigationItem.title = [NSString stringWithFormat:@"Search Result: %@", self.searchBar.text];
 }
+
+#pragma mark - Gesture Recognizer
+
+- (void)singleTapHandler:(UITapGestureRecognizer *)recognizer
+{
+    // CGPoint location = [recognizer locationInView:self.view];
+    [self cancelResponder];
+}
+
+#pragma mark - Helper Methods
+
+-(void)cancelResponder
+{
+    if ([self.searchBar isFirstResponder])
+    {
+        [self searchBarCancelButtonClicked:self.searchBar];
+    }
+}
+
+
+
 
 @end
