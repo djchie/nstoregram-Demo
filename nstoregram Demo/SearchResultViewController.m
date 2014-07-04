@@ -65,7 +65,6 @@
             [resultTableView reloadData];
         }
     };
-    NSLog(@"query name %@", name);
     [[DataProvider sharedInstance] queryProductByName:name completion:block];
   //  [[DataProvider sharedInstance] queryProductByNameContainsString:name completion:block];
 }
