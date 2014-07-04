@@ -23,5 +23,7 @@
 // textview
 @property (weak, nonatomic) IBOutlet UITextView *shortDescription;
 
+@property(nonatomic, assign)BOOL imageIsSet;
+
 
 @end

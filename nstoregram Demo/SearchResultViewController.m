@@ -55,14 +55,26 @@
 {
 
     [SVProgressHUD  show];
+    __weak typeof(self) weakSelf = self;
     NSArrayBlock block = ^(NSArray *obj, NSError *error)
     {
-        [SVProgressHUD dismiss];
         if (!error)
         {
-            searchResultArray = obj;
-            NSLog(@"SearchResultViewController::searchProductByName searchResultArray %@", searchResultArray);
-            [resultTableView reloadData];
+            if (obj.count > 0)
+            {
+                [SVProgressHUD dismiss];
+                searchResultArray = obj;
+                NSLog(@"SearchResultViewController::searchProductByName searchResultArray %@", searchResultArray);
+                [weakSelf.resultTableView reloadData];
+            }
+            else
+            {
+                [SVProgressHUD showErrorWithStatus:@"Product not found"];
+            }
+        }
+        else
+        {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
     };
     [[DataProvider sharedInstance] queryProductByName:name completion:block];
@@ -118,25 +130,36 @@
     PFFile *imageFile = product[@"image"];
     // always send a weakself a callblock due to retain cycles
     __weak typeof (self) weakSelf = self;
-    if (imageFile)
+    // only get the image if the image is set
+    if (!cell.imageIsSet)
     {
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
-            if (!error)
-            {
-                cell.productImageView.image = [UIImage imageWithData:data];
-                // this might not be a good way to approach this
-                // we should consider handling a Key Value observer
-                // to observ whether or not an image is ever set to productImage then
-                // we can update this cell according
-                [weakSelf.resultTableView reloadData];
-
+        if (imageFile)
+        {
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+                if (!error)
+                {
+                    cell.productImageView.image = [UIImage imageWithData:data];
+                    cell.imageIsSet = true;
+                    // this might not be a good way to approach this
+                    // we should consider handling a Key Value observer
+                    // to observ whether or not an image is ever set to productImage then
+                    // we can update this cell according
+                    [weakSelf.resultTableView reloadData];
+                    
+                    
+                }
+            } progressBlock:^(int percentDone) {
+                // we can do some loading screen here if we want
                 
-            }
-        } progressBlock:^(int percentDone) {
-            // we can do some loading screen here if we want
-            
-        }];
+            }];
+        }
+        else
+        {
+            // in this case, theres no image file so the image is set
+            cell.imageIsSet = true;
+        }
     }
+
     //cell.textLabel.text = product[@"store_name"];
    // NSString* countString = [NSString stringWithFormat:@"Price: %@, Stock: %@", product[@"price"], product[@"stock"]];
    // cell.detailTextLabel.text = countString;
@@ -193,6 +216,7 @@
          
      }];
     // do search here
+    [self searchProductsByName:self.searchBar.text];
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
