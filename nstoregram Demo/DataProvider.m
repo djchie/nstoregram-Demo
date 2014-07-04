@@ -12,7 +12,7 @@
 
 @implementation DataProvider
 
-+(instancetype)sharedInstance
++ (instancetype)sharedInstance
 {
     static DataProvider *sharedManagerInstance = nil;
     static dispatch_once_t onceToken;
@@ -22,7 +22,7 @@
 	return sharedManagerInstance;
 }
 
--(void)queryProductByName:(NSString *)name
+- (void)queryProductByName:(NSString *)name
                completion:(NSArrayBlock)block
 {
     // NOTE:: this will be slow for large dataset, see parse documentation
@@ -33,7 +33,7 @@
     [query findObjectsInBackgroundWithBlock:block];
 }
 
--(void)queryAllProductsFromStore:(NSString *)store completion:(NSArrayBlock)block
+- (void)queryAllProductsFromStore:(NSString *)store completion:(NSArrayBlock)block
 {
     // NOTE:: this will be slow for large dataset, see parse documentation
     // the matchesRegex query allows us to query with caseinsensitivity:
@@ -42,10 +42,10 @@
     [query findObjectsInBackgroundWithBlock:block];
 }
 
--(void)queryStoreByCategory:(NSString *)category completion:(NSArrayBlock)block
+- (void)queryStoreByCategory:(NSString *)category completion:(NSArrayBlock)block
 {
     PFQuery *query = [PFQuery queryWithClassName:@"Store"];
-    [query whereKey:@"category" matchesRegex:category modifiers:@"i"];
+    [query whereKey:@"type" equalTo:category];
     [query findObjectsInBackgroundWithBlock:block];
 }
 

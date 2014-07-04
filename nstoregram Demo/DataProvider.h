@@ -14,12 +14,13 @@ typedef void (^NSArrayBlock)(NSArray *obj, NSError *error);
 // DataProvider is a singleton object
 +(instancetype)sharedInstance;
 
--(void)queryProductByName:(NSString *)name
+- (void)queryProductByName:(NSString *)name
                completion:(NSArrayBlock)block;
 
--(void)queryAllProductsFromStore:(NSString *)store
+- (void)queryAllProductsFromStore:(NSString *)store
                       completion:(NSArrayBlock)block;
 
--(void)queryStoreByCategory:(NSString *)name
+- (void)queryStoreByCategory:(NSString *)name
                completion:(NSArrayBlock)block;
+
 @end

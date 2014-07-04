@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C102F67A1966024E00BBE425 /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C102F6791966024E00BBE425 /* SearchResultViewController.m */; };
+		C102F67C196612BD00BBE425 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C102F67B196612BD00BBE425 /* MapKit.framework */; };
 		C1330E611962624300091486 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330E601962624300091486 /* Foundation.framework */; };
 		C1330E631962624300091486 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330E621962624300091486 /* CoreGraphics.framework */; };
 		C1330E651962624300091486 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330E641962624300091486 /* UIKit.framework */; };
@@ -14,7 +16,7 @@
 		C1330E6D1962624300091486 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1330E6C1962624300091486 /* main.m */; };
 		C1330E711962624300091486 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1330E701962624300091486 /* AppDelegate.m */; };
 		C1330E741962624300091486 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1330E721962624300091486 /* Main.storyboard */; };
-		C1330E771962624300091486 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1330E761962624300091486 /* ViewController.m */; };
+		C1330E771962624300091486 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1330E761962624300091486 /* HomeViewController.m */; };
 		C1330E791962624300091486 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1330E781962624300091486 /* Images.xcassets */; };
 		C1330E801962624300091486 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330E7F1962624300091486 /* XCTest.framework */; };
 		C1330E811962624300091486 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1330E601962624300091486 /* Foundation.framework */; };
@@ -45,6 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C102F6781966024E00BBE425 /* SearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewController.h; sourceTree = "<group>"; };
+		C102F6791966024E00BBE425 /* SearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
+		C102F67B196612BD00BBE425 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C1330E5D1962624300091486 /* nstoregram Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nstoregram Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1330E601962624300091486 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C1330E621962624300091486 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -56,8 +61,8 @@
 		C1330E6F1962624300091486 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C1330E701962624300091486 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C1330E731962624300091486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C1330E751962624300091486 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C1330E761962624300091486 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C1330E751962624300091486 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		C1330E761962624300091486 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		C1330E781962624300091486 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C1330E7E1962624300091486 /* nstoregram DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nstoregram DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1330E7F1962624300091486 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -83,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C102F67C196612BD00BBE425 /* MapKit.framework in Frameworks */,
 				C1330EA81962637800091486 /* SystemConfiguration.framework in Frameworks */,
 				C1330EA61962636E00091486 /* StoreKit.framework in Frameworks */,
 				C1330EA41962636700091486 /* Security.framework in Frameworks */,
@@ -134,6 +140,7 @@
 		C1330E5F1962624300091486 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C102F67B196612BD00BBE425 /* MapKit.framework */,
 				C1330EA71962637800091486 /* SystemConfiguration.framework */,
 				C1330EA51962636E00091486 /* StoreKit.framework */,
 				C1330EA31962636700091486 /* Security.framework */,
@@ -158,8 +165,10 @@
 				C1330E6F1962624300091486 /* AppDelegate.h */,
 				C1330E701962624300091486 /* AppDelegate.m */,
 				C1330E721962624300091486 /* Main.storyboard */,
-				C1330E751962624300091486 /* ViewController.h */,
-				C1330E761962624300091486 /* ViewController.m */,
+				C1330E751962624300091486 /* HomeViewController.h */,
+				C1330E761962624300091486 /* HomeViewController.m */,
+				C102F6781966024E00BBE425 /* SearchResultViewController.h */,
+				C102F6791966024E00BBE425 /* SearchResultViewController.m */,
 				C1330E781962624300091486 /* Images.xcassets */,
 				C1330E671962624300091486 /* Supporting Files */,
 				D9AC6D6C196281DE00C461D5 /* DataProvider.h */,
@@ -294,8 +303,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1330E771962624300091486 /* ViewController.m in Sources */,
+				C1330E771962624300091486 /* HomeViewController.m in Sources */,
 				C1330E711962624300091486 /* AppDelegate.m in Sources */,
+				C102F67A1966024E00BBE425 /* SearchResultViewController.m in Sources */,
 				D9AC6D6E196281DE00C461D5 /* DataProvider.m in Sources */,
 				C1330E6D1962624300091486 /* main.m in Sources */,
 			);
