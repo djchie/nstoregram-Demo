@@ -14,7 +14,8 @@
 @interface SearchResultViewController : UIViewController <UITableViewDataSource,
                                                           UITableViewDelegate,
                                                           MKMapViewDelegate,
-                                                          UISearchBarDelegate>
+                                                          UISearchBarDelegate,
+                                                          CLLocationManagerDelegate>
 {
     CGRect originalViewFrame;
     CGRect originalNavigationFrame;
@@ -22,6 +23,9 @@
 
 @property (strong, nonatomic) NSString* searchString;
 @property (strong, nonatomic) NSArray* searchResultArray;
+@property (strong, nonatomic) CLLocationManager* locationManager;
+@property (strong, nonatomic) CLLocation* currentLocation;
+@property (strong, nonatomic) NSMutableArray* storeArray;
 
 @property (weak, nonatomic) IBOutlet UITableView* resultTableView;
 @property (weak, nonatomic) IBOutlet MKMapView* resultMapView;

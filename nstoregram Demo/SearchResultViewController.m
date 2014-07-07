@@ -20,6 +20,9 @@
 
 @synthesize searchString;
 @synthesize searchResultArray;
+@synthesize locationManager;
+@synthesize currentLocation;
+@synthesize storeArray;
 @synthesize resultTableView;
 @synthesize resultMapView;
 @synthesize viewSegmentedControl;
@@ -30,17 +33,33 @@
     // Do any additional setup after loading the view.
 
     [self searchProductsByName:searchString];
+
     self.searchBar.text = searchString;
     originalViewFrame = self.view.frame;
     originalNavigationFrame = self.navigationController.navigationBar.frame;
-    
+
+    self.searchBar.delegate = self;
+
+    [[self locationManager] startUpdatingLocation];
+
+    currentLocation = locationManager.location;
+
     resultTableView.delegate = self;
     resultTableView.dataSource = self;
-    self.searchBar.delegate = self;
+
+    resultMapView.mapType = MKMapTypeStandard;
+    resultMapView.zoomEnabled = YES;
+    resultMapView.showsUserLocation = YES;
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.07, 0.07);
+    MKCoordinateRegion region = MKCoordinateRegionMake(currentLocation.coordinate, span);
+    resultMapView.region = region;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self getStores:searchResultArray];
+    [self addMapAnnotation:storeArray];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,6 +100,34 @@
   //  [[DataProvider sharedInstance] queryProductByNameContainsString:name completion:block];
 }
 
+- (void)getStores:(NSArray *)productArray
+{
+    if (storeArray == nil)
+    {
+        storeArray = [[NSMutableArray alloc] init];
+    }
+
+    NSArrayBlock block = ^(NSArray *obj, NSError *error)
+    {
+        if (!error)
+        {
+            PFObject* store = obj[0];
+            [storeArray addObject:store];
+        }
+        else
+        {
+
+        }
+    };
+
+    for (int i = 0; i < productArray.count; i++)
+    {
+        PFObject *product = productArray[i];
+
+        [[DataProvider sharedInstance] queryStoryById:product[@"store_id"] completion:block];
+    }
+}
+
 #pragma mark - Action Methods
 
 - (IBAction)viewSegmentedControlPressed:(id)sender
@@ -117,6 +164,7 @@
         cell = [[ProductResultTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                  reuseIdentifier:NSStringFromClass([ProductResultTableViewCell class])];
     }
+
     PFObject* product = searchResultArray[indexPath.row];
     
     cell.productName.text = product[@"name"];
@@ -173,7 +221,8 @@
 }
 
 #pragma mark - SearchBar Delegate
--(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     // animating search bar UP
     CGRect oldNav = self.navigationController.navigationBar.frame;
@@ -193,7 +242,7 @@
     return YES;
 }
 
--(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [self.searchBar setShowsCancelButton:NO
                                 animated:YES];
@@ -201,7 +250,7 @@
     [searchBar resignFirstResponder];
 }
 
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     // animating search bar down
     [searchBar resignFirstResponder];
@@ -219,7 +268,7 @@
     [self searchProductsByName:self.searchBar.text];
 }
 
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     // animating search bar down
     [searchBar resignFirstResponder];
@@ -236,6 +285,38 @@
 }
 
 #pragma mark - MapView Methods
+
+- (void)addMapAnnotation:(NSMutableArray *)stores
+{
+    for (int i = 0; i < stores.count; i++)
+    {
+        PFObject* product = searchResultArray[i];
+
+        PFGeoPoint* geoPoint = stores[i][@"location"];
+        CLLocationCoordinate2D locationCoordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+        MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
+        [pointAnnotation setCoordinate:locationCoordinate];
+        pointAnnotation.title = stores[i][@"name"];
+        pointAnnotation.subtitle = [NSString stringWithFormat:@"Price: %@; Stock %@", product[@"price"], product[@"stock"]];
+        [resultMapView addAnnotation:pointAnnotation];
+    }
+}
+
+#pragma mark - LocationManager Methods
+
+- (CLLocationManager *)locationManager
+{
+    if (locationManager != nil)
+    {
+        return locationManager;
+    }
+
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+
+    return locationManager;
+}
 
 #pragma mark - Segue Methods
 @end

@@ -36,5 +36,7 @@ typedef void (^NSDataBlock)(NSData *obj, NSError *error);
 -(void)queryProductByNameContainsString:(NSString *)name
                              completion:(NSArrayBlock)block;
 
+-(void)queryStoryById:(NSString *)objectId
+                             completion:(NSArrayBlock)block;
 
 @end

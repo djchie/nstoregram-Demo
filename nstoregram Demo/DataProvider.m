@@ -68,4 +68,11 @@
 }
 
 
+- (void)queryStoryById:(NSString *)objectId completion:(NSArrayBlock)block
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+    [query whereKey:@"objectId" equalTo:objectId];
+    [query findObjectsInBackgroundWithBlock:block];
+}
+
 @end
