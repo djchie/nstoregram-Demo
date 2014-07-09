@@ -43,6 +43,13 @@
     [query findObjectsInBackgroundWithBlock:block];
 }
 
+- (void)queryAllProductsWithCompletion:(NSArrayBlock)block
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Product"];
+    [query setLimit:150];
+    [query findObjectsInBackgroundWithBlock:block];
+}
+
 // USE THESE METHODS FOR CONTAINS IN QUERY
 -(void)queryProductByNameContainsString:(NSString *)name completion:(NSArrayBlock)block
 {

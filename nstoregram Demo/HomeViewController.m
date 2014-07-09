@@ -29,30 +29,6 @@
                                                action:@selector(singleTapHandler:)];
     
     [self.view addGestureRecognizer:singleFingerTap];
-    
-    //TODO:: need to delete this residual code
-    //    NSArrayBlock block = ^(NSArray *obj, NSError *error)
-//    {
-//        if (!error)
-//        {
-//            for (PFObject *aObj in obj)
-//            {
-//                NSLog(@"name of object %@", aObj[@"name"]);
-//            }
-//        }
-//    };
-//	// Do any additional setup after loading the view, typically from a nib.
-//    [[DataProvider sharedInstance] queryProductByName:@"oil"
-//                                           completion:block];
-
-    /*
-    Smoke Shops
-    Clothing
-    Video Games
-    Sporting Goods
-    Auto Parts
-    Consumer Electronics
-     */
 }
 
 - (void)didReceiveMemoryWarning

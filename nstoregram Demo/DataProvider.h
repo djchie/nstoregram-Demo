@@ -39,4 +39,6 @@ typedef void (^NSDataBlock)(NSData *obj, NSError *error);
 -(void)queryStoryById:(NSString *)objectId
                              completion:(NSArrayBlock)block;
 
+- (void)queryAllProductsWithCompletion:(NSArrayBlock)block;
+
 @end

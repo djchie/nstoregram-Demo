@@ -25,7 +25,6 @@
 @property (strong, nonatomic) NSArray* searchResultArray;
 @property (strong, nonatomic) CLLocationManager* locationManager;
 @property (strong, nonatomic) CLLocation* currentLocation;
-@property (strong, nonatomic) NSMutableArray* storeArray;
 
 @property (weak, nonatomic) IBOutlet UITableView* resultTableView;
 @property (weak, nonatomic) IBOutlet MKMapView* resultMapView;

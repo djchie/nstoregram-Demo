@@ -22,7 +22,6 @@
 @synthesize searchResultArray;
 @synthesize locationManager;
 @synthesize currentLocation;
-@synthesize storeArray;
 @synthesize resultTableView;
 @synthesize resultMapView;
 @synthesize viewSegmentedControl;
@@ -58,8 +57,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self getStores:searchResultArray];
-    [self addMapAnnotation:storeArray];
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +82,10 @@
                 [SVProgressHUD dismiss];
                 searchResultArray = obj;
                 NSLog(@"SearchResultViewController::searchProductByName searchResultArray %@", searchResultArray);
+                for (PFObject* product in searchResultArray)
+                {
+                    [self addMapAnnotation:product];
+                }
                 [weakSelf.resultTableView reloadData];
             }
             else
@@ -98,34 +100,6 @@
     };
     [[DataProvider sharedInstance] queryProductByName:name completion:block];
   //  [[DataProvider sharedInstance] queryProductByNameContainsString:name completion:block];
-}
-
-- (void)getStores:(NSArray *)productArray
-{
-    if (storeArray == nil)
-    {
-        storeArray = [[NSMutableArray alloc] init];
-    }
-
-    NSArrayBlock block = ^(NSArray *obj, NSError *error)
-    {
-        if (!error)
-        {
-            PFObject* store = obj[0];
-            [storeArray addObject:store];
-        }
-        else
-        {
-
-        }
-    };
-
-    for (int i = 0; i < productArray.count; i++)
-    {
-        PFObject *product = productArray[i];
-
-        [[DataProvider sharedInstance] queryStoryById:product[@"store_id"] completion:block];
-    }
 }
 
 #pragma mark - Action Methods
@@ -286,20 +260,15 @@
 
 #pragma mark - MapView Methods
 
-- (void)addMapAnnotation:(NSMutableArray *)stores
+- (void)addMapAnnotation:(PFObject *)product
 {
-    for (int i = 0; i < stores.count; i++)
-    {
-        PFObject* product = searchResultArray[i];
-
-        PFGeoPoint* geoPoint = stores[i][@"location"];
+        PFGeoPoint* geoPoint = product[@"location"];
         CLLocationCoordinate2D locationCoordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
         MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
         [pointAnnotation setCoordinate:locationCoordinate];
-        pointAnnotation.title = stores[i][@"name"];
+        pointAnnotation.title = product[@"store_name"];
         pointAnnotation.subtitle = [NSString stringWithFormat:@"Price: %@; Stock %@", product[@"price"], product[@"stock"]];
         [resultMapView addAnnotation:pointAnnotation];
-    }
 }
 
 #pragma mark - LocationManager Methods
