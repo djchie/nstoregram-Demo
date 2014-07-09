@@ -289,7 +289,7 @@
     if (searchBar.text.length > 0)
     {
         SearchResultViewController *searchResultVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchResultViewController"];
-        searchResultVC.searchString = searchBar.text;
+        searchResultVC.searchString = [searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [self.navigationController pushViewController:searchResultVC
                                              animated:true];
     }

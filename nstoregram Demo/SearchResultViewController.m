@@ -239,7 +239,7 @@
          
      }];
     // do search here
-    [self searchProductsByName:self.searchBar.text];
+    [self searchProductsByName:[self.searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
